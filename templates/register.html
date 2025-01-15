@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% from 'bootstrap5/form.html' import render_form %}
+
+{% block content %}
+
+<div class="container">
+    {% with messages = get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                {% if category == "register_error" %}
+                    <p style="color: red">{{ message }}</p>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    {{ render_form(register_form) }}
+    <div style="margin: 10px 0 10px 0">
+        <a href="{{ url_for('login') }}">Have an account?</a>
+    </div>
+</div>
+
+{% endblock %}
+
+

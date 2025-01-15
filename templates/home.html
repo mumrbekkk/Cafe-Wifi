@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Home Page{% endblock %}
+
+
+{% block content %}
+    <div class="container" id="main-div">
+        <h1><b>Welcome to "Where to Chill" 's official page</b></h1>
+        <br><hr>
+        <div class="inner">
+            {% for cafe in cafes %}
+                <div class="container" style="margin-bottom: 100px">
+                    <h2>{{ cafe.name }}</h2>
+                    <img src="{{ cafe.img_url }}" class="img-thumbnail" style="width: 700px; height: 500px">
+                    <h2><a href="{{ cafe.map_url }}" style="text-decoration: none" target="_blank">Location</a></h2>
+                    <a class="btn btn-dark" href="{{ url_for('get_cafe_details', cafe_id=cafe.id) }}" id="{{cafe.id}}">details</a>
+                    <hr style="font-weight: bold">
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="container">
+        <div class="inner" style="padding-bottom: 50px">
+            <a class="btn btn-primary" href="{{ url_for('add_cafe') }}">ADD MY CAFE</a>
+        </div>
+    </div>
+{% endblock %}
+
