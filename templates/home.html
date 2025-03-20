@@ -2,6 +2,7 @@
 
 {% block title %}Home Page{% endblock %}
 
+{% block scripts %} <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"> {% endblock %}
 
 {% block content %}
     <div class="container" id="main-div">
@@ -12,7 +13,7 @@
                 <div class="container" style="margin-bottom: 100px">
                     <h2>{{ cafe.name }}</h2>
                     <img src="{{ cafe.img_url }}" class="img-thumbnail" style="width: 700px; height: 500px">
-                    <h2><a href="{{ cafe.map_url }}" style="text-decoration: none" target="_blank">Location</a></h2>
+                    <h2><a href="{{ cafe.map_url }}" style="text-decoration: none" target="_blank"> <i class="fa-solid fa-location-dot"></i> Location</a></h2>
                     <a class="btn btn-dark" href="{{ url_for('get_cafe_details', cafe_id=cafe.id) }}" id="{{cafe.id}}">details</a>
                     <hr style="font-weight: bold">
                 </div>

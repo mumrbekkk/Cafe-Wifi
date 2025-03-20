@@ -87,6 +87,10 @@ class Cafe(db.Model):
 def get_cafe_list():
     return db.session.execute(db.select(Cafe)).scalars().all()
 
+def get_table_by_attr(Entity, attribute, value):
+    query = db.select(Entity).where(getattr(Entity, attribute) == value)
+    return db.session.execute(query).scalar()
+
 """--------------------------------------- Additional Functions ---------------------------------------"""
 
 
@@ -105,7 +109,7 @@ def register():
     register_form = RegisterForm()
 
     if register_form.validate_on_submit():
-        if db.session.execute(db.select(User).where(User.email == register_form.email.data)).scalar():
+        if get_table_by_attr(User, "email", register_form.email.data):
             flash("User already exists", "register_error")
         # NEW USER
         else:
@@ -133,7 +137,7 @@ def login():
     form = LoginForm()
 
     if form.validate_on_submit():
-        selected_user = db.session.execute(db.select(User).where(User.email == form.email.data)).scalar()
+        selected_user = get_table_by_attr(User, "email", form.email.data)
         if not selected_user:
             flash("Incorrect email", "login_error")
             redirect(url_for('login'))
@@ -157,7 +161,7 @@ def logout():
 # ---------- CAFE DETAILS ---------- #
 @app.route('/cafe-detail/<int:cafe_id>', methods=['GET', 'POST'])
 def get_cafe_details(cafe_id):
-    cafe = db.session.execute(db.select(Cafe).where(Cafe.id == cafe_id)).scalar()
+    cafe = get_table_by_attr(Cafe, "id", cafe_id)
     return render_template("cafe-detail.html", cafe=cafe)
 
 
